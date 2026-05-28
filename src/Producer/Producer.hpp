@@ -12,21 +12,21 @@
 #include <iostream>
 #include <thread>
 
+#include "SafeQueue.hpp"
+
 namespace Plazza
 {
     class Producer
     {
     public:
-        Producer();
-        Producer(unsigned int id);
+        Producer(unsigned int id, SafeQueue &queue, bool &signal);
         ~Producer() = default;
 
-        void tryProduce();
-        void produceRoutine();
+        void produceRoutine(std::size_t itemsToProduce);
 
     private:
         unsigned int _id;
-        std::queue<int> _queue;
-        std::mutex _mutex;
+        SafeQueue &_queue;
+        bool &_signal;
     };
 }

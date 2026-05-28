@@ -59,27 +59,16 @@ int Plazza::Core::run()
     const std::size_t itemsPerProducer = 10;
 
     for (std::size_t i = 0; i < producerCount; ++i) {
-        _producerThreads.emplace_back([this, itemsPerProducer, i]() {
-            for (std::size_t j = 0; j < itemsPerProducer; ++j) {
-                if (_signal)
-                    break;
-                int value = rand() % 100;
-                _queue.push(value);
-                std::cout << "Producer " << i << " produced: " << value << std::endl;
-            }
+        _producerThreads.emplace_back([this, i, itemsPerProducer]() {
+            Producer producer(i, _queue, _signal);
+            producer.produceRoutine(itemsPerProducer);
         });
     }
 
     for (std::size_t i = 0; i < consumerCount; ++i) {
         _consumerThreads.emplace_back([this, i]() {
-            while (!_signal) {
-                int value;
-                _queue.tryPop(value);
-                if (value != -1) {
-                    std::cout << "Consumer " << i << " consumed: " << value << std::endl;
-                }
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            }
+            Consumer consumer(i, _queue, _signal);
+            consumer.consumeRoutine();
         });
     }
 

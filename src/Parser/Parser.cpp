@@ -16,6 +16,8 @@ namespace Plazza
     **/
     void Parser::parseArguments(int argc, char *argv[])
     {
+        (void)argc;
+        (void)argv;
         std::cout << "Parsing arguments..." << std::endl;
     }
 

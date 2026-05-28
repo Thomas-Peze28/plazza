@@ -12,21 +12,21 @@
 #include <iostream>
 #include <thread>
 
+#include "SafeQueue.hpp"
+
 namespace Plazza
 {
     class Consumer
     {
     public:
-        Consumer();
-        Consumer(unsigned int id);
+        Consumer(unsigned int id, SafeQueue &queue, bool &signal);
         ~Consumer() = default;
 
-        void tryConsume();
         void consumeRoutine();
 
     private:
         unsigned int _id;
-        std::queue<int> _queue;
-        std::mutex _mutex;
+        SafeQueue &_queue;
+        bool &_signal;
     };
 }

@@ -7,27 +7,22 @@
 
 #include "Producer.hpp"
 
-Plazza::Producer::Producer() : _queue(), _mutex()
+Plazza::Producer::Producer(unsigned int id, SafeQueue &queue, bool &signal) 
+    : _id(id), _queue(queue), _signal(signal)
 {
 }
 
-Plazza::Producer::Producer(unsigned int id) : _id(id), _queue(), _mutex()
+void Plazza::Producer::produceRoutine(std::size_t itemsToProduce)
 {
-}
-
-void Plazza::Producer::tryProduce()
-{
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    int value = rand() % 100;
-    _queue.push(value);
-    std::cout << "Produced: " << value << std::endl;
-}
-
-void Plazza::Producer::produceRoutine()
-{
-    while (true) {
-        tryProduce();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    for (std::size_t j = 0; j < itemsToProduce; ++j) {
+        if (_signal)
+            break;
+            
+        int value = rand() % 100;
+        _queue.push(value);
+        
+        std::cout << "Producer " << _id << " produced: " << value << std::endl;
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
