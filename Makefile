@@ -18,6 +18,7 @@ SRC     =   src/main.cpp \
 			src/Producer/Producer.cpp \
 			src/Consumer/Consumer.cpp \
 			src/Parser/Parser.cpp \
+			src/ThreadPool/ThreadPool.cpp
 
 INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
@@ -26,6 +27,7 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Producer/Producer.hpp \
 			src/Consumer/Consumer.hpp \
 			src/Parser/Parser.hpp \
+			src/ThreadPool/ThreadPool.hpp
 			
 
 CXX     =   g++

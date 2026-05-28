@@ -45,46 +45,24 @@ void Plazza::Core::signalHandler(int signal)
 }
 
 /**
-* Runs the plazza with the given configuration.
+* Runs the plazza.
 * @return The result of the plazza execution.
 **/
 int Plazza::Core::run()
 {
-    std::signal(SIGINT, signalHandler);
+    unsigned int nb_cooks = 2;
+    std::cout << "Kitchens with " << nb_cooks << " cooks..." << std::endl;
+    
+    ThreadPool pool(nb_cooks);
 
-    std::cout << "Plazza is running..." << std::endl;
-
-    const std::size_t producerCount = 2;
-    const std::size_t consumerCount = 2;
-    const std::size_t itemsPerProducer = 10;
-
-    for (std::size_t i = 0; i < producerCount; ++i) {
-        _producerThreads.emplace_back([this, i, itemsPerProducer]() {
-            Producer producer(i, _queue, _signal);
-            producer.produceRoutine(itemsPerProducer);
+    for (int i = 0; i < 10; ++i) {
+        pool.enqueueTask([i]() {
+            std::cout << "Thread " << std::this_thread::get_id() << " preparing pizza number " << i << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         });
     }
-
-    for (std::size_t i = 0; i < consumerCount; ++i) {
-        _consumerThreads.emplace_back([this, i]() {
-            Consumer consumer(i, _queue, _signal);
-            consumer.consumeRoutine();
-        });
-    }
-
-    for (auto &thread : _producerThreads) {
-        if (thread.joinable()) {
-            thread.join();
-        }
-    }
-
-    _signal = true;
-    _queue.stop();
-
-    for (auto &thread : _consumerThreads) {
-        if (thread.joinable()) {
-            thread.join();
-        }
-    }
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::cout << "Closing Thread Pool..." << std::endl;
+    pool.stop();
     return 0;
 }

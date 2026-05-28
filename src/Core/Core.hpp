@@ -17,6 +17,7 @@
     #include "SafeQueue.hpp"
     #include "Producer.hpp"
     #include "Consumer.hpp"
+    #include "ThreadPool.hpp"
     
 
 namespace Plazza
