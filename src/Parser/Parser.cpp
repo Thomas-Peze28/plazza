@@ -60,12 +60,14 @@ namespace Plazza
     {
         if (typeStr == "regina")
             type = Regina;
-        if (typeStr == "margarita")
+        else if (typeStr == "margarita")
             type = Margarita;
-        if (typeStr == "americana")
+        else if (typeStr == "americana")
             type = Americana;
-        if (typeStr == "fantasia")
+        else if (typeStr == "fantasia")
             type = Fantasia;
+        else
+            return false;
         return true;
     }
 
@@ -79,14 +81,16 @@ namespace Plazza
     {
         if (sizeStr == "S")
             size = S;
-        if (sizeStr == "M")
+        else if (sizeStr == "M")
             size = M;
-        if (sizeStr == "L")
+        else if (sizeStr == "L")
             size = L;
-        if (sizeStr == "XL")
+        else if (sizeStr == "XL")
             size = XL;
-        if (sizeStr == "XXL")
+        else if (sizeStr == "XXL")
             size = XXL;
+        else
+            return false;
         return true;
     }
     
