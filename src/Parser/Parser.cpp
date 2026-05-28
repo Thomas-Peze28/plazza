@@ -7,6 +7,7 @@
 
 #include "Parser.hpp"
 #include "Core.hpp"
+#include <map>
 
 namespace Plazza
 {
@@ -30,9 +31,110 @@ namespace Plazza
     /**
     * Parses a command.
     * @param command The command to parse.
+    * @return A vector of orders parsed from the command.
     **/
-    void Parser::parseCommand(const std::string &command)
+    std::vector<Order> Parser::parseCommand(const std::string &command)
     {
-        std::cout << "Parsing command: " << command << std::endl;
+        std::vector<Order> orders;
+        std::stringstream ss(command);
+        std::string orderStr;
+
+        while (std::getline(ss, orderStr, ';'))
+        {
+            Order singleOrder;
+            if (parseOrder(orderStr, singleOrder))
+                orders.push_back(singleOrder);
+            else
+                ErrorMinor error("Invalid order: " + orderStr);
+        }
+        return orders;
     }
-}
+
+    /**
+    * Parses the type of pizza from a string.
+    * @param orderStr The order string to parse.
+    * @param order The Order struct to fill with parsed data.
+    * @return True if the order was successfully parsed, false otherwise.
+    **/
+    bool Parser::parseType(const std::string &typeStr, PizzaType &type)
+    {
+        if (typeStr == "regina")
+            type = Regina;
+        if (typeStr == "margarita")
+            type = Margarita;
+        if (typeStr == "americana")
+            type = Americana;
+        if (typeStr == "fantasia")
+            type = Fantasia;
+        return true;
+    }
+
+    /**
+    * Parses the size of pizza from a string.
+    * @param sizeStr The size string to parse.
+    * @param size The PizzaSize enum to fill with parsed data.
+    * @return True if the size was successfully parsed.
+    **/
+    bool Parser::parseSize(const std::string &sizeStr, PizzaSize &size)
+    {
+        if (sizeStr == "S")
+            size = S;
+        if (sizeStr == "M")
+            size = M;
+        if (sizeStr == "L")
+            size = L;
+        if (sizeStr == "XL")
+            size = XL;
+        if (sizeStr == "XXL")
+            size = XXL;
+        return true;
+    }
+    
+    /**
+    * Parses the amount of pizza from a string.
+    * @param amountStr The amount string to parse.
+    * @param amount The integer to fill with parsed data.
+    * @return True if the amount was successfully parsed.
+    **/
+    bool Parser::parseAmount(const std::string &amountStr, int &amount)
+    {
+        if (amountStr.empty() || amountStr[0] != 'x')
+            return false;
+        try {
+            amount = std::stoi(amountStr.substr(1));
+            return amount > 0;
+        } catch (...) {
+            return false;
+        }
+    }
+
+    /**
+    * Parses a single order string into an Order struct.
+    * @param orderStr The order string to parse.
+    * @param order The Order struct to fill with parsed data.
+    * @return True if the order was successfully parsed, false otherwise.
+    **/
+    bool Parser::parseOrder(const std::string &orderStr, Order &order)
+    {
+        std::stringstream ss(orderStr);
+        std::string typeStr;
+        std::string sizeStr;
+        std::string amountStr;
+
+        if (!(ss >> typeStr >> sizeStr >> amountStr))
+            return false;
+
+        std::string extra;
+        if (ss >> extra)
+            return false;
+
+        if (!parseType(typeStr, order.type))
+            return false;   
+        if (!parseSize(sizeStr, order.size))
+            return false;
+        if (!parseAmount(amountStr, order.amount))
+            return false;
+        return true;
+    }
+};
+    

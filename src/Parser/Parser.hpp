@@ -11,10 +11,17 @@
     #include <iostream>
 
     #include "RTCError.hpp"
+    #include "IRecipe.hpp"
 
 namespace Plazza
 {
     class Core;
+
+    struct Order {
+        PizzaType type;
+        PizzaSize size;
+        int amount;
+    };
 
     class Parser
     {
@@ -23,6 +30,12 @@ namespace Plazza
             ~Parser() = default;
 
             void parseArguments(int argc, char *argv[], Core &core);
-            void parseCommand(const std::string &command);
+            std::vector<Order> parseCommand(const std::string &command);
+        
+        private:
+            bool parseOrder(const std::string &orderStr, Order &order);
+            bool parseType(const std::string &typeStr, PizzaType &type);
+            bool parseSize(const std::string &sizeStr, PizzaSize &size);
+            bool parseAmount(const std::string &amountStr, int &amount);
     };
 };
