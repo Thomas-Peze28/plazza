@@ -61,7 +61,8 @@ int Plazza::Core::run()
     for (std::size_t i = 0; i < producerCount; ++i) {
         _producerThreads.emplace_back([this, itemsPerProducer, i]() {
             for (std::size_t j = 0; j < itemsPerProducer; ++j) {
-                if (_signal) break;
+                if (_signal)
+                    break;
                 int value = rand() % 100;
                 _queue.push(value);
                 std::cout << "Producer " << i << " produced: " << value << std::endl;
