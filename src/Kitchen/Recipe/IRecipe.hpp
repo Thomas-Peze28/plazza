@@ -10,6 +10,7 @@
     #include <vector>
 
 namespace Plazza {
+
     enum PizzaType
     {
         Regina = 1,
@@ -27,7 +28,7 @@ namespace Plazza {
         XXL = 16
     };
 
-    enum Ingridients
+    enum Ingredients
     {
         DOUGH,
         TOMATO,
@@ -43,7 +44,7 @@ namespace Plazza {
     class IRecipe {
         public:
             virtual ~IRecipe() = default;
-            virtual std::vector<Ingridients> getIngridients() const = 0;
+            virtual std::vector<Ingredients> getIngredients() const = 0;
             virtual int getCookingTime() const = 0;
     };
 };
