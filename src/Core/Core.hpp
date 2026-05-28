@@ -18,8 +18,8 @@
     #include "Producer.hpp"
     #include "Consumer.hpp"
     #include "ThreadPool.hpp"
+    #include "Logger.hpp"
     
-
 namespace Plazza
 {
     class Core
