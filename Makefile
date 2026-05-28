@@ -15,16 +15,18 @@ RESET=\033[0m
 
 SRC     =   src/main.cpp \
 			src/Core/Core.cpp \
-			src/SafeQueue/SafeQueue.cpp \
+			src/Utils/SafeQueue/SafeQueue.cpp \
 			src/Producer/Producer.cpp \
 			src/Consumer/Consumer.cpp \
+			src/Parser/Parser.cpp \
 
 INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
-			src/SafeQueue/ISafeQueue.hpp \
-			src/SafeQueue/SafeQueue.hpp \
+			src/Utils/SafeQueue/ISafeQueue.hpp \
+			src/Utils/SafeQueue/SafeQueue.hpp \
 			src/Producer/Producer.hpp \
 			src/Consumer/Consumer.hpp \
+			src/Parser/Parser.hpp \
 			
 
 CXX     =   g++

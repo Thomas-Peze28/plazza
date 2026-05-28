@@ -13,6 +13,7 @@
     #include <csignal>
 
     #include "RTCError.hpp"
+    #include "Parser.hpp"
     #include "SafeQueue.hpp"
     #include "Producer.hpp"
     #include "Consumer.hpp"
@@ -34,6 +35,7 @@ namespace Plazza
             static bool _signal;
 
         private:
+            Parser _parser;
             std::vector<std::thread> _producerThreads;
             std::vector<std::thread> _consumerThreads;
             SafeQueue _queue;
