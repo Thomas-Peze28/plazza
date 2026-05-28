@@ -7,7 +7,10 @@
 
 #include "ReginaRecipe.hpp"
 
-// - Regina: Contains dough, tomato, gruyere, ham, mushrooms. Baked in 2 secs * multiplier.
+/**
+* @brief Construct a new ReginaRecipe object
+* @details - Regina: Contains dough, tomato, gruyere, ham, mushrooms. Baked in 2 secs * multiplier.
+**/
 Plazza::ReginaRecipe::ReginaRecipe()
 {
     _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE, Ingridients::HAM, Ingridients::MUSHROOMS};

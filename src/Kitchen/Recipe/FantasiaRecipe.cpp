@@ -7,7 +7,10 @@
 
 #include "FantasiaRecipe.hpp"
 
-// - Fantasia: Contains dough, tomato, eggplant, goat cheese and chief love. Baked in 4 secs * multiplier
+/**
+* @brief Construct a new FantasiaRecipe object
+* @details - Fantasia: Contains dough, tomato, eggplant, goat cheese and chief love. Baked in 4 secs * multiplier.
+**/
 Plazza::FantasiaRecipe::FantasiaRecipe()
 {
     _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::EGGPLANT, Ingridients::GOAT_CHEESE, Ingridients::CHIEF_LOVE};

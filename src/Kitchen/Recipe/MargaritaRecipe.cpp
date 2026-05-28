@@ -7,7 +7,10 @@
 
 #include "MargaritaRecipe.hpp"
 
-// - Margarita: Contains dough, tomato and gruyere. Baked in 1 sec * multiplier.
+/**
+* @brief Construct a new MargaritaRecipe object
+* @details - Margarita: Contains dough, tomato and gruyere. Baked in 1 sec * multiplier.
+**/
 Plazza::MargaritaRecipe::MargaritaRecipe()
 {
     _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE};

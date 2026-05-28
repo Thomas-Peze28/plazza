@@ -7,7 +7,10 @@
 
 #include "AmericanaRecipe.hpp"
 
-// - Americana: Contains dough, tomato, gruyere, steak. Baked in 2 secs * multiplier.
+/**
+* @brief Construct a new AmericanaRecipe object
+* @details - Americana: Contains dough, tomato, gruyere and steak. Baked in 2 secs * multiplier.
+**/
 Plazza::AmericanaRecipe::AmericanaRecipe()
 {
     _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE, Ingridients::STEAK};
