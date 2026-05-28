@@ -62,7 +62,7 @@ int Plazza::Core::run()
         }
 
         if (input == "status") {
-            logger.log("Status check requested (To be implemented).");
+            logger.log("Status command.");
             continue;
         }
         
