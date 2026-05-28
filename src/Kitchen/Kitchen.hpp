@@ -7,6 +7,15 @@
 
 #ifndef KITCHEN_HPP_
 #define KITCHEN_HPP_
+    #include <vector>
+    #include <map>
+    #include <thread>
+    #include <semaphore.h>
+    #include "IRecipe.hpp"
+    #include "ReginaRecipe.hpp"
+    #include "MargaritaRecipe.hpp"
+    #include "AmericanaRecipe.hpp"
+    #include "FantasiaRecipe.hpp"
 
 namespace Plazza
 {
@@ -16,8 +25,10 @@ namespace Plazza
         Kitchen();
         ~Kitchen();
 
-    protected:
     private:
+        std::vector<std::thread> _cooks;
+        std::map <Ingridients, int> _stock;
+        sem_t _accessStock;
     };
 };
 
