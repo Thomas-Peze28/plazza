@@ -6,6 +6,7 @@
 */
 
 #include "Parser.hpp"
+#include "Core.hpp"
 
 namespace Plazza
 {
@@ -13,12 +14,17 @@ namespace Plazza
     * Parses the command-line arguments.
     * @param argc The number of command-line arguments.
     * @param argv The array of command-line arguments.
+    * @param core The core instance.
     **/
-    void Parser::parseArguments(int argc, char *argv[])
+    void Parser::parseArguments(int argc, char *argv[], Core &core)
     {
         (void)argc;
-        (void)argv;
-        std::cout << "Parsing arguments..." << std::endl;
+        if (argv[1] != NULL)
+            core._multiplier = std::stof(argv[1]);
+        if (argv[2] != NULL)
+            core._cooks = std::stoi(argv[2]);
+        if (argv[3] != NULL)
+            core._refillTime = std::stoi(argv[3]);
     }
 
     /**

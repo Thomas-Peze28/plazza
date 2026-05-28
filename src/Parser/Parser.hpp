@@ -12,16 +12,17 @@
 
     #include "RTCError.hpp"
 
-
 namespace Plazza
 {
+    class Core;
+
     class Parser
     {
         public:
             Parser() = default;
             ~Parser() = default;
 
-            void parseArguments(int argc, char *argv[]);
+            void parseArguments(int argc, char *argv[], Core &core);
             void parseCommand(const std::string &command);
     };
 };

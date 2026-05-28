@@ -11,6 +11,7 @@
     #include <string>
     #include <iostream>
     #include <csignal>
+    #include <sstream>
 
     #include "RTCError.hpp"
     #include "Parser.hpp"
@@ -34,6 +35,10 @@ namespace Plazza
 
             static void signalHandler(int signal);
             static bool _signal;
+
+            float _multiplier;
+            int _cooks;
+            int _refillTime;
 
         private:
             Parser _parser;

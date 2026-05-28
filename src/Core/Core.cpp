@@ -6,7 +6,6 @@
 */
 
 #include "Core.hpp"
-#include <sstream>
 
 bool Plazza::Core::_signal = false;
 
@@ -52,10 +51,9 @@ void Plazza::Core::signalHandler(int signal)
 int Plazza::Core::run()
 {
     Logger logger;
-    unsigned int nb_cooks = 2;
-    logger.log("Kitchens with " + std::to_string(nb_cooks) + " cooks...");
+    logger.log("Kitchens with " + std::to_string(_cooks) + " cooks...");
     
-    ThreadPool pool(nb_cooks);
+    ThreadPool pool(_cooks);
 
     for (int i = 0; i < 10; ++i) {
         pool.enqueueTask([i, &logger]() {

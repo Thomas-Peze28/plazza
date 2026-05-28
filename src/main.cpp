@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         if (core.displayHelp(argc, argv))
             return 0;
         
-        parser.parseArguments(argc, argv);
+        parser.parseArguments(argc, argv, core);
 
         return core.run();
     } catch (const std::exception &e) {
