@@ -15,11 +15,10 @@ Plazza::Consumer::Consumer(unsigned int id, SafeQueue &queue, bool &signal)
 void Plazza::Consumer::consumeRoutine()
 {
     while (!_signal) {
-        int value;
-        if (_queue.tryPop(value)) {
+        int value = _queue.pop();
+        
+        if (!_signal) {
             std::cout << "Consumer " << _id << " consumed: " << value << std::endl;
-        } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
 }

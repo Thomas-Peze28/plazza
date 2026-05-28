@@ -14,5 +14,6 @@ namespace Plazza
         virtual void push(int value) = 0;
         virtual bool tryPop(int &value) = 0;
         virtual int pop() = 0;
+        virtual void notifyAll() = 0;
     };
 }

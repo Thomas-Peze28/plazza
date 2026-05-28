@@ -23,7 +23,8 @@ namespace Plazza
         void push(int value) override;
         bool tryPop(int &value) override;
         int pop() override;
-    
+        void notifyAll() override;
+
     private:
         std::queue<int> _queue;
         std::mutex _mutex;

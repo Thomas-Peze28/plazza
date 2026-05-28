@@ -6,6 +6,7 @@
 */
 
 #include "SafeQueue.hpp"
+#include "Core.hpp"
 
 /**
 * @brief Construct a new Safe Queue
@@ -51,9 +52,22 @@ int Plazza::SafeQueue::pop()
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    _condition.wait(lock, [this] { return !_queue.empty(); });
+    _condition.wait(lock, [this] { 
+        return !_queue.empty() || Plazza::Core::_signal;
+    });
+
+    if (Plazza::Core::_signal && _queue.empty())
+        return -1;
 
     int value = _queue.front();
     _queue.pop();
     return value;
+}
+
+/**
+* @brief Notify all waiting threads (used to unblock threads during shutdown)
+**/
+void Plazza::SafeQueue::notifyAll()
+{
+    _condition.notify_all();
 }

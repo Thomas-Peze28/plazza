@@ -78,6 +78,9 @@ int Plazza::Core::run()
         }
     }
 
+    _signal = true;
+    _queue.notifyAll();
+
     for (auto &thread : _consumerThreads) {
         if (thread.joinable()) {
             thread.join();
