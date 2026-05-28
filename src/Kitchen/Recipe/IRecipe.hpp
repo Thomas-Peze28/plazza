@@ -5,9 +5,9 @@
 ** Recipe
 */
 
-#ifndef RECIPE_HPP_
-#define RECIPE_HPP_
-    #include <vector>
+#pragma once
+    
+#include <vector>
 
 namespace Plazza {
 
@@ -48,5 +48,3 @@ namespace Plazza {
             virtual int getCookingTime() const = 0;
     };
 };
-
-#endif /* !RECIPE_HPP_ */

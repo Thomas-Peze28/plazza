@@ -30,7 +30,8 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Parser/Parser.hpp \
 			src/ThreadPool/ThreadPool.hpp \
 			src/Utils/Logger/Logger.hpp \
-			
+			src/Kitchen/Recipe/IRecipe.hpp \
+			src/Kitchen/Recipe/Recipe.hpp \
 
 CXX     =   g++
 
