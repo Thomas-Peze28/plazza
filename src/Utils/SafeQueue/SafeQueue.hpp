@@ -10,6 +10,7 @@
 #include "ISafeQueue.hpp"
 #include <queue>
 #include <mutex>
+#include <condition_variable>
 
 namespace Plazza
 {
@@ -21,9 +22,11 @@ namespace Plazza
 
         void push(int value) override;
         bool tryPop(int &value) override;
-
+        int pop() override;
+    
     private:
         std::queue<int> _queue;
         std::mutex _mutex;
+        std::condition_variable _condition;
     };
 }

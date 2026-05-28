@@ -20,9 +20,11 @@ Plazza::SafeQueue::SafeQueue() : _mutex()
 **/
 void Plazza::SafeQueue::push(int value)
 {
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    _queue.push(value);
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _queue.push(value);
+    }
+    _condition.notify_one();
 }
 
 /**
@@ -39,4 +41,19 @@ bool Plazza::SafeQueue::tryPop(int &value)
     value = _queue.front();
     _queue.pop();
     return true;
+}
+
+/**
+* @brief Pop a value from the queue, blocking if the queue is empty
+* @return The popped value
+**/
+int Plazza::SafeQueue::pop()
+{
+    std::unique_lock<std::mutex> lock(_mutex);
+
+    _condition.wait(lock, [this] { return !_queue.empty(); });
+
+    int value = _queue.front();
+    _queue.pop();
+    return value;
 }
