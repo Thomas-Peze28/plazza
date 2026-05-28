@@ -20,5 +20,8 @@ namespace Plazza
         public:
             Parser() = default;
             ~Parser() = default;
+
+            void parseArguments(int argc, char *argv[]);
+            void parseCommand(const std::string &command);
     };
 };
