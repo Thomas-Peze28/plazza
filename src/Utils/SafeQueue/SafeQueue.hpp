@@ -75,7 +75,8 @@ namespace Plazza
         **/
         void stop() override
         {
-            std::lock_guard<std::mutex> lock(_mutex);
+            std::lock_guard<std::mutex> 
+            lock(_mutex);
             _stopped = true;
             _condition.notify_all();
         }
