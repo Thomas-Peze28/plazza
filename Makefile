@@ -15,7 +15,6 @@ RESET=\033[0m
 
 SRC     =   src/main.cpp \
 			src/Core/Core.cpp \
-			src/Utils/SafeQueue/SafeQueue.cpp \
 			src/Producer/Producer.cpp \
 			src/Consumer/Consumer.cpp \
 			src/Parser/Parser.cpp \

@@ -19,14 +19,14 @@ namespace Plazza
     class Producer
     {
     public:
-        Producer(unsigned int id, SafeQueue &queue, bool &signal);
+        Producer(unsigned int id, SafeQueue<int> &queue, bool &signal);
         ~Producer() = default;
 
         void produceRoutine(std::size_t itemsToProduce);
 
     private:
         unsigned int _id;
-        SafeQueue &_queue;
+        SafeQueue<int> &_queue;
         bool &_signal;
     };
 }

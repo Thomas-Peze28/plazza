@@ -7,13 +7,14 @@
 
 namespace Plazza
 {
+    template <typename Type>
     class ISafeQueue
     {
     public:
         virtual ~ISafeQueue() = default;
-        virtual void push(int value) = 0;
-        virtual bool tryPop(int &value) = 0;
-        virtual int pop() = 0;
-        virtual void notifyAll() = 0;
+        virtual void push(Type value) = 0;
+        virtual bool tryPop(Type &value) = 0;
+        virtual Type pop() = 0;
+        virtual void stop() = 0;
     };
 }

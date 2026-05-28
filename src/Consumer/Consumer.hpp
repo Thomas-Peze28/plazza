@@ -19,14 +19,14 @@ namespace Plazza
     class Consumer
     {
     public:
-        Consumer(unsigned int id, SafeQueue &queue, bool &signal);
+        Consumer(unsigned int id, SafeQueue<int> &queue, bool &signal);
         ~Consumer() = default;
 
         void consumeRoutine();
 
     private:
         unsigned int _id;
-        SafeQueue &_queue;
+        SafeQueue<int> &_queue;
         bool &_signal;
     };
 }

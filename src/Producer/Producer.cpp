@@ -7,7 +7,7 @@
 
 #include "Producer.hpp"
 
-Plazza::Producer::Producer(unsigned int id, SafeQueue &queue, bool &signal) 
+Plazza::Producer::Producer(unsigned int id, SafeQueue<int> &queue, bool &signal) 
     : _id(id), _queue(queue), _signal(signal)
 {
 }

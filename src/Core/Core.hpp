@@ -38,7 +38,7 @@ namespace Plazza
             Parser _parser;
             std::vector<std::thread> _producerThreads;
             std::vector<std::thread> _consumerThreads;
-            SafeQueue _queue;
+            SafeQueue<int> _queue;
     };
 };
 

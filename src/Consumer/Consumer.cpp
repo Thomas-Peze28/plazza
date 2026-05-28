@@ -7,7 +7,7 @@
 
 #include "Consumer.hpp"
 
-Plazza::Consumer::Consumer(unsigned int id, SafeQueue &queue, bool &signal) 
+Plazza::Consumer::Consumer(unsigned int id, SafeQueue<int> &queue, bool &signal) 
     : _id(id), _queue(queue), _signal(signal)
 {
 }
