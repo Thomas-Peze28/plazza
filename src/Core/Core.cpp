@@ -17,15 +17,19 @@ bool Plazza::Core::_signal = false;
 **/
 bool Plazza::Core::displayHelp(int argc, char *argv[])
 {
-    if (argc != 2) {
-        std::cout << "USAGE: ./plazza" << std::endl;
-        return true;
-    }
-    for (unsigned int i = 0; argv[i] != NULL; i++)
+    for (unsigned int i = 0; argv[i] != NULL; i++) {
         if (std::string(argv[i]) == "-h" || std::string(argv[i]) == "--help") {
-            std::cout << "USAGE: ./plazza" << std::endl;
+            std::cout << "USAGE: ./plazza <multiplier> <cooks_per_kitchen> <stock_refresh_ms>\n"
+                      << "  <multiplier> : float or int (0 < value, can be < 1 to divide cooking time)\n"
+                      << "  <cooks_per_kitchen> : integer number of cooks per kitchen\n"
+                      << "  <stock_refresh_ms> : integer milliseconds for ingredient replenishment" << std::endl;
             return true;
         }
+    }
+    if (argc != 4) {
+        std::cout << "USAGE: ./plazza <multiplier> <cooks_per_kitchen> <stock_refresh_ms>" << std::endl;
+        return true;
+    }
     return false;
 }
 
