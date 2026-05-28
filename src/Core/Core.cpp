@@ -51,21 +51,32 @@ void Plazza::Core::signalHandler(int signal)
 int Plazza::Core::run()
 {
     Logger logger;
-    logger.log("Kitchens with " + std::to_string(_cooks) + " cooks...");
-    
-    ThreadPool pool(_cooks);
+    logger.log("Plazza Reception is open. Waiting for orders...");
 
-    for (int i = 0; i < 10; ++i) {
-        pool.enqueueTask([i, &logger]() {
+    while (!_signal) {
+        std::cout << "> ";
+        std::string input;
+
+        if (!std::getline(std::cin, input)) {
+            break; 
+        }
+
+        if (input == "status") {
+            logger.log("Status check requested (To be implemented).");
+            continue;
+        }
+        
+        if (input.empty())
+            continue;
+
+        std::vector<Order> orders = _parser.parseCommand(input);
+
+        for (const auto& order : orders) {
             std::ostringstream ss;
-            ss << "Thread " << std::this_thread::get_id() << " is cooking pizza " << i;
-            std::string msg = ss.str();
-            logger.log(msg);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        });
+            ss << "Order Accepted: Type " << order.type << ", Size " << order.size << ", Amount " << order.amount;
+            logger.log(ss.str());
+        }
     }
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    logger.log("Closing Thread Pool...");
-    pool.stop();
+    logger.log("Closing Plazza...");
     return 0;
 }
