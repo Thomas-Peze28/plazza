@@ -27,7 +27,7 @@ namespace Plazza
 
     private:
         std::vector<std::thread> _cooks;
-        std::map <Ingridients, int> _stock;
+        std::map <Ingredients, int> _stock;
         sem_t _accessStock;
     };
 };
