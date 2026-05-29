@@ -16,19 +16,23 @@
     #include "MargaritaRecipe.hpp"
     #include "AmericanaRecipe.hpp"
     #include "FantasiaRecipe.hpp"
+    #include "Core.hpp"
 
 namespace Plazza
 {
     class Kitchen
     {
-    public:
-        Kitchen();
-        ~Kitchen();
+        public:
+            Kitchen(const Core &core);
+            ~Kitchen();
+            void refillStock();
 
-    private:
-        std::vector<std::thread> _cooks;
-        std::map <Ingredients, int> _stock;
-        sem_t _accessStock;
+        private:
+            const Core &_core;
+            std::vector<std::thread> _cooks;
+            std::map <Ingredients, int> _stock;
+            sem_t _accessStock;
+            int _clock;
     };
 };
 
