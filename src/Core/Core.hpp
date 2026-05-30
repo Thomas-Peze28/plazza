@@ -20,6 +20,7 @@
     #include "Consumer.hpp"
     #include "ThreadPool.hpp"
     #include "Logger.hpp"
+    #include "MessageQueue.hpp"
     
 namespace Plazza
 {
@@ -45,6 +46,8 @@ namespace Plazza
             std::vector<std::thread> _producerThreads;
             std::vector<std::thread> _consumerThreads;
             SafeQueue<int> _queue;
+
+            void handleOrder(const Order &order, Logger &logger, int &kitchenId);
     };
 };
 
