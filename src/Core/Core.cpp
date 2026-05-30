@@ -79,7 +79,7 @@ void Plazza::Core::handleOrder(const Order &order, Logger &logger, int &kitchenI
             MessageQueue mq(mqName);
 
             if (mq.sendMessage(singlePizza))
-                logger.log("✅ [Réception] Pizza envoyée à la cuisine " + std::to_string(kitchenId));
+                logger.log("[Réception] Pizza envoyée à la cuisine " + std::to_string(kitchenId));
             kitchenId++;
         }
     }
