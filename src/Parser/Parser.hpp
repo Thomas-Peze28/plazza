@@ -17,6 +17,12 @@ namespace Plazza
 {
     class Core;
 
+    /**
+    * Represents a pizza order with type, size, and amount.
+    * @param type The type of pizza (e.g., Regina, Margarita).
+    * @param size The size of the pizza (e.g., S, M, L).
+    * @param amount The quantity of pizzas ordered.
+    **/
     struct Order {
         PizzaType type;
         PizzaSize size;

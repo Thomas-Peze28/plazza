@@ -22,6 +22,12 @@
 
 namespace Plazza
 {
+    /**
+    * Represents information about a kitchen.
+    * @param id The unique identifier of the kitchen.
+    * @param currentLoad The current load of the kitchen.
+    * @param pid The process ID of the kitchen.
+    **/
     struct KitchenInfo
     {
         int id;
@@ -50,9 +56,11 @@ namespace Plazza
         Parser _parser;
         std::vector<KitchenInfo> _kitchens;
         unsigned int _kitchenCount = 0;
+        std::mutex _kitchensMutex;
     
-        void handleOrder(const Order &order, Logger &logger, int &kitchenId);
+        void handleOrder(const Order &order, Logger &logger);
         bool trySendOrder(const Order &singlePizza, Logger &logger);
         int createKitchen(const Order &singlePizza, Logger &logger);
+        void listenKitchens();
     };
 };
