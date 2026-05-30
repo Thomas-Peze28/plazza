@@ -57,7 +57,7 @@ bool Plazza::Core::trySendOrder(const Order &singlePizza, Logger &logger)
     for (auto& kitchen : _kitchens) {
         if (kitchen.currentLoad < 2 * _cooks) {
             std::string mqName = "/plazza_kitchen_" + std::to_string(kitchen.id);
-            MessageQueue mq(mqName);
+            MessageQueue<Order> mq(mqName);
             
             if (mq.sendMessage(singlePizza)) {
                 kitchen.currentLoad++;
@@ -85,11 +85,11 @@ int Plazza::Core::createKitchen(const Order &singlePizza, Logger &logger)
     pid_t pid = fork();
 
     if (pid == -1) {
-        logger.log("Erreur : Impossible de fork.");
+        logger.log("Error : Failed to fork.");
         return -1;
     }
     else if (pid == 0) {
-        MessageQueue mq(mqName);
+        MessageQueue<Order> mq(mqName);
 
         logger.log("[Nouvelle Cuisine " + std::to_string(_kitchenCount) + "] Ouverture");
         while (true) {
@@ -99,17 +99,16 @@ int Plazza::Core::createKitchen(const Order &singlePizza, Logger &logger)
                 
                 std::this_thread::sleep_for(std::chrono::seconds(3));
                 
-                MessageQueue coreMq("/plazza_core_queue");
-                Order msg;
-                msg.amount = _kitchenCount;
-                coreMq.sendMessage(msg);
+                MessageQueue<int> coreMq("/plazza_core_queue");
+                int kitchenId = _kitchenCount;
+                coreMq.sendMessage(kitchenId);
             }
         }
         mq.closeQueue();
         exit(0);
     } 
     else {
-        MessageQueue mq(mqName);
+        MessageQueue<Order> mq(mqName);
         if (mq.sendMessage(singlePizza)) {
             logger.log("New kitchen " + std::to_string(_kitchenCount) + " created. Pizza sent.");
             std::lock_guard<std::mutex> lock(_kitchensMutex);
@@ -184,13 +183,11 @@ void Plazza::Core::listenKitchens()
     Logger logger;
 
     mq_unlink("/plazza_core_queue");
-    MessageQueue coreMq("/plazza_core_queue");
+    MessageQueue<int> coreMq("/plazza_core_queue");
 
     while (!_signal) {
-        Order msg;
-        if (coreMq.receiveMessage(msg)) {
-           int kitchenId = msg.amount;
-
+        int kitchenId;
+        if (coreMq.receiveMessage(kitchenId)) {
            std::lock_guard<std::mutex> lock(_kitchensMutex);
 
            for (auto& kitchen : _kitchens) {

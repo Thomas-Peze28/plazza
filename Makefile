@@ -18,7 +18,6 @@ SRC     =   src/main.cpp \
 			src/Parser/Parser.cpp \
 			src/ThreadPool/ThreadPool.cpp \
 			src/Utils/Logger/Logger.cpp \
-			src/Utils/IPC/MessageQueue.cpp \
 
 INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
