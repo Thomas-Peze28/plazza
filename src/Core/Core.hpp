@@ -7,47 +7,42 @@
 
 #pragma once
 
-    #include <cstdlib>
-    #include <string>
-    #include <iostream>
-    #include <csignal>
-    #include <sstream>
+#include <cstdlib>
+#include <string>
+#include <iostream>
+#include <csignal>
+#include <sstream>
 
-    #include "RTCError.hpp"
-    #include "Parser.hpp"
-    #include "SafeQueue.hpp"
-    #include "Producer.hpp"
-    #include "Consumer.hpp"
-    #include "ThreadPool.hpp"
-    #include "Logger.hpp"
-    #include "MessageQueue.hpp"
-    
+#include "RTCError.hpp"
+#include "Parser.hpp"
+#include "SafeQueue.hpp"
+#include "ThreadPool.hpp"
+#include "Logger.hpp"
+#include "MessageQueue.hpp"
+
 namespace Plazza
 {
     class Core
     {
-        public:
-            Core() = default;
-            ~Core() = default;
-        
-            int run();
+    public:
+        Core() = default;
+        ~Core() = default;
 
-            bool displayHelp(int argc, char *argv[]);
+        int run();
 
-            static void signalHandler(int signal);
-            static bool _signal;
+        bool displayHelp(int argc, char *argv[]);
 
-            float _multiplier;
-            int _cooks;
-            int _refillTime;
+        static void signalHandler(int signal);
+        static bool _signal;
 
-        private:
-            Parser _parser;
-            std::vector<std::thread> _producerThreads;
-            std::vector<std::thread> _consumerThreads;
-            SafeQueue<int> _queue;
+        float _multiplier;
+        int _cooks;
+        int _refillTime;
 
-            void handleOrder(const Order &order, Logger &logger, int &kitchenId);
+    private:
+        Parser _parser;
+        SafeQueue<int> _queue;
+
+        void handleOrder(const Order &order, Logger &logger, int &kitchenId);
     };
 };
-

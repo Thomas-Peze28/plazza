@@ -15,8 +15,6 @@ RESET=\033[0m
 
 SRC     =   src/main.cpp \
 			src/Core/Core.cpp \
-			src/Producer/Producer.cpp \
-			src/Consumer/Consumer.cpp \
 			src/Parser/Parser.cpp \
 			src/ThreadPool/ThreadPool.cpp \
 			src/Utils/Logger/Logger.cpp \
@@ -26,8 +24,6 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
 			src/Utils/SafeQueue/ISafeQueue.hpp \
 			src/Utils/SafeQueue/SafeQueue.hpp \
-			src/Producer/Producer.hpp \
-			src/Consumer/Consumer.hpp \
 			src/Parser/Parser.hpp \
 			src/ThreadPool/ThreadPool.hpp \
 			src/Utils/Logger/Logger.hpp \
