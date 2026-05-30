@@ -13,6 +13,6 @@
 **/
 Plazza::AmericanaRecipe::AmericanaRecipe()
 {
-    _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE, Ingridients::STEAK};
+    _ingridients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE, Ingredients::STEAK};
     _cookingTime = 2;
 }

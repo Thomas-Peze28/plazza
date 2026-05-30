@@ -13,6 +13,6 @@
 **/
 Plazza::MargaritaRecipe::MargaritaRecipe()
 {
-    _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE};
+    _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE};
     _cookingTime = 1;
 }

@@ -13,6 +13,6 @@
 **/
 Plazza::ReginaRecipe::ReginaRecipe()
 {
-    _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::GRUYERE, Ingridients::HAM, Ingridients::MUSHROOMS};
+    _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE, Ingredients::HAM, Ingredients::MUSHROOMS};
     _cookingTime = 2;
 }

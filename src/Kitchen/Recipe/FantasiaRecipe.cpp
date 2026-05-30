@@ -13,6 +13,6 @@
 **/
 Plazza::FantasiaRecipe::FantasiaRecipe()
 {
-    _ingridients = {Ingridients::DOUGH, Ingridients::TOMATO, Ingridients::EGGPLANT, Ingridients::GOAT_CHEESE, Ingridients::CHIEF_LOVE};
+    _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::EGGPLANT, Ingredients::GOAT_CHEESE, Ingredients::CHIEF_LOVE};
     _cookingTime = 4;
 }
