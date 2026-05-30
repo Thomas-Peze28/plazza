@@ -41,8 +41,7 @@ namespace Plazza
 
     private:
         Parser _parser;
-        SafeQueue<int> _queue;
-
+    
         void handleOrder(const Order &order, Logger &logger, int &kitchenId);
     };
 };
