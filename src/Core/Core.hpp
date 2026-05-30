@@ -53,6 +53,6 @@ namespace Plazza
     
         void handleOrder(const Order &order, Logger &logger, int &kitchenId);
         bool trySendOrder(const Order &singlePizza, Logger &logger);
-        int createKitchen(const Order &singlePizza, Logger &logger)
+        int createKitchen(const Order &singlePizza, Logger &logger);
     };
 };
