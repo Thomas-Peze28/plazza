@@ -12,6 +12,7 @@
 #include <mqueue.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <ctime>
 
 #include "Parser.hpp"
 #include "RTCError.hpp"
@@ -23,6 +24,10 @@ namespace Plazza
     {
     public:
 
+        /** 
+        * Constructor for the MessageQueue class.
+        * @param name The name of the message queue.
+        **/
         MessageQueue(const std::string& name) : _name(name)
         {
             struct mq_attr attr;
@@ -37,6 +42,9 @@ namespace Plazza
             }
         }
 
+        /** 
+        * Destructor for the MessageQueue class.
+        **/
         ~MessageQueue()
         {
             if (_mq) {
@@ -44,6 +52,11 @@ namespace Plazza
             }
         }
 
+        /** 
+        * Sends a message through the message queue.
+        * @param msg The message to be sent.
+        * @return True if the message was sent successfully, false otherwise.
+        **/
         bool sendMessage(const T& msg)
         {
             if (mq_send(_mq, reinterpret_cast<const char*>(&msg), sizeof(T), 0) == 0) {
@@ -52,12 +65,36 @@ namespace Plazza
             return false;
         }
 
+        /** 
+        * Receives a message from the message queue.
+        * @param msg The message to be received.
+        * @return True if the message was received successfully, false otherwise.
+        **/
         bool receiveMessage(T& msg)
         {
             ssize_t bytes_read = mq_receive(_mq, reinterpret_cast<char*>(&msg), sizeof(T), nullptr);
             return bytes_read == sizeof(T);
         }
 
+        /** 
+        * Receives a message from the message queue with a timeout.
+        * @param msg The message to be received.
+        * @param timeoutSeconds The timeout in seconds.
+        * @return True if the message was received successfully, false otherwise.
+        **/
+        bool receiveMessageWithTimeout(T& msg, int timeoutSeconds)
+        {
+            struct timespec timeout;
+            clock_gettime(CLOCK_REALTIME, &timeout);
+            timeout.tv_sec += timeoutSeconds;
+
+            ssize_t bytes_read = mq_timedreceive(_mq, reinterpret_cast<char*>(&msg), sizeof(T), nullptr, &timeout);
+            return bytes_read == sizeof(T);
+        }
+
+        /** 
+        * Closes the message queue.
+        **/
         void closeQueue()
         {
             mq_unlink(_name.c_str());
