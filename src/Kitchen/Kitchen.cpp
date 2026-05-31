@@ -62,9 +62,30 @@ void Plazza::Kitchen::run()
 void Plazza::Kitchen::cookPizza(Order pizza)
 {
     Logger logger;
-        
-    std::this_thread::sleep_for(std::chrono::seconds(3));
 
+    {
+        std::lock_guard<std::mutex> lock(_accessStock);
+        _stock[DOUGH] -= 1;
+        _stock[TOMATO] -= 1;
+        _stock[GRUYERE] -= 1;
+        if (pizza.type == Regina) {
+            _stock[HAM] -= 1;
+            _stock[MUSHROOMS] -= 1;
+        } else if (pizza.type == Americana) {
+            _stock[STEAK] -= 1;
+        } else if (pizza.type == Fantasia) {
+            _stock[EGGPLANT] -= 1;
+            _stock[GOAT_CHEESE] -= 1;
+            _stock[CHIEF_LOVE] -= 1;
+        }
+    }
+    if (pizza.type == Margarita) {
+        std::this_thread::sleep_for(std::chrono::seconds(static_cast<int64_t>(1 * _multiplier)));
+    } else if (pizza.type == Americana || pizza.type == Regina) {
+        std::this_thread::sleep_for(std::chrono::seconds(static_cast<int64_t>(2 * _multiplier)));
+    } else if (pizza.type == Fantasia) {
+        std::this_thread::sleep_for(std::chrono::seconds(static_cast<int64_t>(4 * _multiplier)));
+    }
     logger.log("Kitchen " + std::to_string(_id) + " finished pizza type " + std::to_string(pizza.type));
 
     MessageQueue<CoreMessage> coreMq("/plazza_core_queue");
