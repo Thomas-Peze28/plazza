@@ -10,6 +10,18 @@
 Plazza::Kitchen::Kitchen(int id, const std::string& mqName, int cooks, float multiplier, int refillTime)
     : _id(id), _mqName(mqName), _cooks(cooks), _multiplier(multiplier), _refillTime(refillTime), _cookPool(cooks)
 {
+    _stock[Ingredients::DOUGH] = 5;
+    _stock[Ingredients::TOMATO] = 5;
+    _stock[Ingredients::GRUYERE] = 5;
+    _stock[Ingredients::HAM] = 5;
+    _stock[Ingredients::MUSHROOMS] = 5;
+    _stock[Ingredients::STEAK] = 5;
+    _stock[Ingredients::EGGPLANT] = 5;
+    _stock[Ingredients::GOAT_CHEESE] = 5;
+    _stock[Ingredients::CHIEF_LOVE] = 5;
+
+    _isOpen = true;
+    _refillThread = std::thread(&Kitchen::refillStock, this);
 }
 
 /**
@@ -57,4 +69,19 @@ void Plazza::Kitchen::cookPizza(Order pizza)
     msgCore.kitchenId = _id;
     msgCore.isClosing = false;
     coreMq.sendMessage(msgCore);
+}
+
+/**
+* Refill the stock every _refillTime milliseconds.
+**/
+void Plazza::Kitchen::refillStock()
+{
+    while (_isOpen) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(_refillTime));
+        
+        std::lock_guard<std::mutex> lock(_accessStock);
+        for (auto& item : _stock) {
+            item.second += 1;
+        }
+    }
 }

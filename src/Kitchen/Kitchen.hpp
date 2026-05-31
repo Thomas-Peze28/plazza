@@ -41,7 +41,12 @@ namespace Plazza
         float _multiplier;
         int _refillTime;
         ThreadPool _cookPool;
+        std::thread _refillThread;
+        bool _isOpen;
 
         void cookPizza(Order pizza);
+        bool hasIngredients(const std::vector<Ingredients> &recipeIngredients);
+        void consumeIngredients(const std::vector<Ingredients> &recipeIngredients);
+        void refillStock();
     };
 };
