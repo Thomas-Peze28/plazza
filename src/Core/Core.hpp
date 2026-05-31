@@ -19,6 +19,7 @@
 #include "ThreadPool.hpp"
 #include "Logger.hpp"
 #include "MessageQueue.hpp"
+#include "Kitchen.hpp"
 
 namespace Plazza
 {
@@ -33,6 +34,16 @@ namespace Plazza
         int id;
         int currentLoad;
         pid_t pid;
+    };
+
+    /**
+    * Represents a message sent from a kitchen to the core.
+    * @param kitchenId The ID of the kitchen that will prepare the pizza.
+    * @param isClosing If the kitchen is closing.
+    **/
+    struct CoreMessage {
+        int kitchenId;
+        bool isClosing;
     };
 
     class Core

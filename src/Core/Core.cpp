@@ -61,7 +61,7 @@ bool Plazza::Core::trySendOrder(const Order &singlePizza, Logger &logger)
             
             if (mq.sendMessage(singlePizza)) {
                 kitchen.currentLoad++;
-                logger.log("Pizza envoyée à la cuisine existante " + std::to_string(kitchen.id));
+                logger.log("Pizza sent to existing kitchen " + std::to_string(kitchen.id));
                 return true;
             }
         }
@@ -89,22 +89,9 @@ int Plazza::Core::createKitchen(const Order &singlePizza, Logger &logger)
         return -1;
     }
     else if (pid == 0) {
-        MessageQueue<Order> mq(mqName);
-
-        logger.log("[Nouvelle Cuisine " + std::to_string(_kitchenCount) + "] Ouverture");
-        while (true) {
-            Order receivedPizza;
-            if (mq.receiveMessage(receivedPizza)) {
-                logger.log("[Cuisine " + std::to_string(_kitchenCount) + "] J'ai reçu une pizza du type " + std::to_string(receivedPizza.type));
-                
-                std::this_thread::sleep_for(std::chrono::seconds(3));
-                
-                MessageQueue<int> coreMq("/plazza_core_queue");
-                int kitchenId = _kitchenCount;
-                coreMq.sendMessage(kitchenId);
-            }
-        }
-        mq.closeQueue();
+        logger.log("New kitchen " + std::to_string(_kitchenCount) + " created. Waiting for orders...");
+        Kitchen kitchen(_kitchenCount, mqName, _cooks, _multiplier, _refillTime);
+        kitchen.run();
         exit(0);
     } 
     else {
@@ -156,8 +143,12 @@ int Plazza::Core::run()
         std::cout << "> ";
         std::string input;
 
-        if (!std::getline(std::cin, input)) {
+        if (!std::getline(std::cin, input) || input == "exit") {
             break;
+        }
+        if (input == "clear") {
+            system("clear");
+            continue;
         }
         if (input == "status") {
             logger.log("Status command.");
@@ -165,7 +156,6 @@ int Plazza::Core::run()
         }
         if (input.empty())
             continue;
-
         std::vector<Order> orders = _parser.parseCommand(input);
         for (const auto &order : orders) {
             handleOrder(order, logger);
@@ -183,17 +173,22 @@ void Plazza::Core::listenKitchens()
     Logger logger;
 
     mq_unlink("/plazza_core_queue");
-    MessageQueue<int> coreMq("/plazza_core_queue");
+    MessageQueue<CoreMessage> coreMq("/plazza_core_queue");
 
     while (!_signal) {
-        int kitchenId;
-        if (coreMq.receiveMessage(kitchenId)) {
+        CoreMessage msgCore;
+        if (coreMq.receiveMessage(msgCore)) {
            std::lock_guard<std::mutex> lock(_kitchensMutex);
 
-           for (auto& kitchen : _kitchens) {
-               if (kitchen.id == kitchenId) {
-                   kitchen.currentLoad--;
-                   logger.log("Cuisine " + std::to_string(kitchenId) + " a terminé une pizza. Charge actuelle: " + std::to_string(kitchen.currentLoad) + "/" + std::to_string(2 * _cooks));
+           for (auto it = _kitchens.begin(); it != _kitchens.end(); ++it) {
+               if (it->id == msgCore.kitchenId) {
+                   if (msgCore.isClosing) {
+                       logger.log("Kitchen " + std::to_string(it->id) + " is closing. Removing from list.");
+                       _kitchens.erase(it);
+                   } else {
+                       it->currentLoad--;
+                       logger.log("Kitchen " + std::to_string(it->id) + " finished a pizza. Current load: " + std::to_string(it->currentLoad) + "/" + std::to_string(2 * _cooks));
+                   }
                    break;
                }
            }
