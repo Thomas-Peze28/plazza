@@ -7,10 +7,8 @@
 
 #include "Kitchen.hpp"
 
-Plazza::Kitchen::Kitchen()
+Plazza::Kitchen::Kitchen(int id, const std::string& mqName, int cooks, float multiplier, int refillTime)
+    : _id(id), _mqName(mqName), _cooks(cooks), _multiplier(multiplier), _refillTime(refillTime)
 {
 }
 
-Plazza::Kitchen::~Kitchen()
-{
-}

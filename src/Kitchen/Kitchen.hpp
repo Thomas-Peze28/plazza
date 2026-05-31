@@ -5,31 +5,39 @@
 ** Kitchen
 */
 
-#ifndef KITCHEN_HPP_
-#define KITCHEN_HPP_
-    #include <vector>
-    #include <map>
-    #include <thread>
-    #include <semaphore.h>
-    #include "IRecipe.hpp"
-    #include "ReginaRecipe.hpp"
-    #include "MargaritaRecipe.hpp"
-    #include "AmericanaRecipe.hpp"
-    #include "FantasiaRecipe.hpp"
+#pragma once
+
+#include <vector>
+#include <map>
+#include <thread>
+#include <semaphore.h>
+
+#include "IRecipe.hpp"
+#include "ReginaRecipe.hpp"
+#include "MargaritaRecipe.hpp"
+#include "AmericanaRecipe.hpp"
+#include "FantasiaRecipe.hpp"
+#include "MessageQueue.hpp"
 
 namespace Plazza
 {
     class Kitchen
     {
     public:
-        Kitchen();
-        ~Kitchen();
+        Kitchen(int id, const std::string& mqName, int cooks, float multiplier, int refillTime);
+        ~Kitchen() = default;
+
+        void run();
 
     private:
         std::vector<std::thread> _cooks;
         std::map <Ingredients, int> _stock;
         sem_t _accessStock;
+
+        int _id;
+        std::string _mqName;
+        int _cooks;
+        float _multiplier;
+        int _refillTime;
     };
 };
-
-#endif /* !KITCHEN_HPP_ */
