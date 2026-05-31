@@ -24,13 +24,15 @@ SRC     =   src/main.cpp \
 			src/Kitchen/Recipe/MargaritaRecipe.cpp \
 			src/Kitchen/Recipe/ReginaRecipe.cpp \
 
-INCLUDE =  	src/Core/Core.hpp \
+INCLUDE =   	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
 			src/Utils/SafeQueue/ISafeQueue.hpp \
 			src/Utils/SafeQueue/SafeQueue.hpp \
 			src/Parser/Parser.hpp \
 			src/ThreadPool/ThreadPool.hpp \
 			src/Utils/Logger/Logger.hpp \
+			src/Kitchen/Kitchen.hpp \
+			src/Kitchen/Cooks/Cooks_routine.hpp \
 			src/Kitchen/Recipe/IRecipe.hpp \
 			src/Kitchen/Recipe/Recipe.hpp \
 			src/Utils/IPC/MessageQueue.hpp \
