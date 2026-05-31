@@ -10,15 +10,15 @@
 Plazza::Kitchen::Kitchen(int id, const std::string& mqName, int cooks, float multiplier, int refillTime)
     : _id(id), _mqName(mqName), _cooks(cooks), _multiplier(multiplier), _refillTime(refillTime), _cookPool(cooks)
 {
-    _stock[Ingredients::DOUGH] = 5;
-    _stock[Ingredients::TOMATO] = 5;
-    _stock[Ingredients::GRUYERE] = 5;
-    _stock[Ingredients::HAM] = 5;
-    _stock[Ingredients::MUSHROOMS] = 5;
-    _stock[Ingredients::STEAK] = 5;
-    _stock[Ingredients::EGGPLANT] = 5;
-    _stock[Ingredients::GOAT_CHEESE] = 5;
-    _stock[Ingredients::CHIEF_LOVE] = 5;
+    _stock[DOUGH] = 5;
+    _stock[TOMATO] = 5;
+    _stock[GRUYERE] = 5;
+    _stock[HAM] = 5;
+    _stock[MUSHROOMS] = 5;
+    _stock[STEAK] = 5;
+    _stock[EGGPLANT] = 5;
+    _stock[GOAT_CHEESE] = 5;
+    _stock[CHIEF_LOVE] = 5;
 
     _isOpen = true;
     _refillThread = std::thread(&Kitchen::refillStock, this);
