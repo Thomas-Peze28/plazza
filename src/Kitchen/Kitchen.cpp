@@ -8,7 +8,7 @@
 #include "Kitchen.hpp"
 
 Plazza::Kitchen::Kitchen(int id, const std::string& mqName, int cooks, float multiplier, int refillTime)
-    : _id(id), _mqName(mqName), _cooks(cooks), _multiplier(multiplier), _refillTime(refillTime), _cookPool(cooks)
+    : _id(id), _mqName(mqName), _cooks(cooks), _multiplier(multiplier), _refillTime(refillTime), _cookPool(cooks), _currentLoad(0)
 {
     _stock[DOUGH] = 5;
     _stock[TOMATO] = 5;
@@ -167,12 +167,21 @@ void Plazza::Kitchen::refillStock()
 **/
 void Plazza::Kitchen::printStatus()
 {
-    Logger logger;
-    std::lock_guard<std::mutex> lock(_accessStock);
+    std::stringstream ss;
+    std::lock_guard<std::mutex> stockLock(_accessStock);
+    std::lock_guard<std::mutex> loadLock(_loadMutex);
 
-    std::string status = "Kitchen " + std::to_string(_id) + " stock: ";
-    for (const auto& item : _stock) {
-        status += std::to_string(item.first) + ": " + std::to_string(item.second) + " ";
-    }
-    logger.log(status);
+    ss << "\n[KITCHEN " << _id << " STATUS]\n"
+       << "Current Load: " << _currentLoad << "/" << 2 * _cooks << "\n"
+       << "Stock: "
+       << "[Dough: " << _stock[Ingredients::DOUGH] << "]"
+       << "[Tomato: " << _stock[Ingredients::TOMATO] << "]"
+       << "[Gruyere: " << _stock[Ingredients::GRUYERE] << "]"
+       << "[Ham: " << _stock[Ingredients::HAM] << "]"
+       << "[Mushrooms: " << _stock[Ingredients::MUSHROOMS] << "]"
+       << "[Steak: " << _stock[Ingredients::STEAK] << "]"
+       << "[Eggplant: " << _stock[Ingredients::EGGPLANT] << "]"
+       << "[Goat Cheese: " << _stock[Ingredients::GOAT_CHEESE] << "]"
+       << "[Chief Love: " << _stock[Ingredients::CHIEF_LOVE] << "]";
+    std::cout << ss.str() << std::endl;
 }

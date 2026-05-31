@@ -43,6 +43,8 @@ namespace Plazza
         ThreadPool _cookPool;
         std::thread _refillThread;
         bool _isOpen;
+        int _currentLoad;
+        std::mutex _loadMutex;
 
         void cookPizza(Order pizza);
         bool hasIngredients(const std::vector<Ingredients> &recipeIngredients);
