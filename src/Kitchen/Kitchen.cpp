@@ -37,17 +37,19 @@ void Plazza::Kitchen::run()
     while (true) {
         Order receivedPizza;
     
-        if (mq.receiveMessageWithTimeout(receivedPizza, 5) && receivedPizza.amount > 0) {
+        if (mq.receiveMessageWithTimeout(receivedPizza, 5)) {
 
             if (receivedPizza.amount == -1) {
                 printStatus();
                 continue;
             }
 
-            logger.log("Kitchen " + std::to_string(_id) + " received an order for a pizza of type " + std::to_string(receivedPizza.type));
-            _cookPool.enqueueTask([this, receivedPizza]() {
-                this->cookPizza(receivedPizza);
-            });
+            if (receivedPizza.amount > 0) {
+                logger.log("Kitchen " + std::to_string(_id) + " received an order for a pizza of type " + std::to_string(receivedPizza.type));
+                _cookPool.enqueueTask([this, receivedPizza]() {
+                    this->cookPizza(receivedPizza);
+                });
+            }
             
         } else {
             logger.log("Kitchen " + std::to_string(_id) + " is inactive. Closing...");
