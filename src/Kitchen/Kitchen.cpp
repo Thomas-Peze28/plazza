@@ -69,7 +69,7 @@ void Plazza::Kitchen::cookPizza(Order pizza)
             (pizza.type == Regina && (_stock[HAM] <= 0 || _stock[MUSHROOMS] <= 0)) ||
             (pizza.type == Americana && _stock[STEAK] <= 0) ||
             (pizza.type == Fantasia && (_stock[EGGPLANT] <= 0 || _stock[GOAT_CHEESE] <= 0 || _stock[CHIEF_LOVE] <= 0))) {
-            std::this_thread::sleep_for(std::chrono::seconds(_refillTime / 1000));
+            refillStock();
         }
         _stock[DOUGH] -= 1;
         _stock[TOMATO] -= 1;
