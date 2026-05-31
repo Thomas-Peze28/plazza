@@ -16,3 +16,13 @@ Plazza::FantasiaRecipe::FantasiaRecipe()
     _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::EGGPLANT, Ingredients::GOAT_CHEESE, Ingredients::CHIEF_LOVE};
     _cookingTime = 4;
 }
+
+std::vector<Ingredients> Plazza::FantasiaRecipe::getIngredients() const
+{
+    return _ingredients;
+}
+
+int Plazza::FantasiaRecipe::getCookingTime() const
+{
+    return _cookingTime;
+}

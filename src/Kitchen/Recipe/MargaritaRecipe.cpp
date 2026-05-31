@@ -16,3 +16,13 @@ Plazza::MargaritaRecipe::MargaritaRecipe()
     _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE};
     _cookingTime = 1;
 }
+
+std::vector<Ingredients> Plazza::MargaritaRecipe::getIngredients() const
+{
+    return _ingredients;
+}
+
+int Plazza::MargaritaRecipe::getCookingTime() const
+{
+    return _cookingTime;
+}

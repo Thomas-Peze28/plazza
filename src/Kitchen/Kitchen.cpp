@@ -49,6 +49,7 @@ void Plazza::Kitchen::cookPizza(Order pizza)
     Logger logger;
         
     std::this_thread::sleep_for(std::chrono::seconds(3));
+
     logger.log("Kitchen " + std::to_string(_id) + " finished pizza type " + std::to_string(pizza.type));
 
     MessageQueue<CoreMessage> coreMq("/plazza_core_queue");

@@ -15,6 +15,10 @@ namespace Plazza {
         public:
             MargaritaRecipe();
             ~MargaritaRecipe() override = default;
+
+            std::vector<Ingredients> getIngredients() const override;
+            int getCookingTime() const override;
+    
         private:
             std::vector<Ingredients> _ingredients;
             int _cookingTime;

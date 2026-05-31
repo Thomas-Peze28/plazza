@@ -16,3 +16,13 @@ Plazza::ReginaRecipe::ReginaRecipe()
     _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE, Ingredients::HAM, Ingredients::MUSHROOMS};
     _cookingTime = 2;
 }
+
+std::vector<Ingredients> Plazza::ReginaRecipe::getIngredients() const
+{
+    return _ingredients;
+}
+
+int Plazza::ReginaRecipe::getCookingTime() const
+{
+    return _cookingTime;
+}
