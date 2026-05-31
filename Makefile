@@ -18,6 +18,7 @@ SRC     =   src/main.cpp \
 			src/Parser/Parser.cpp \
 			src/ThreadPool/ThreadPool.cpp \
 			src/Utils/Logger/Logger.cpp \
+			src/Kitchen/Kitchen.cpp \
 
 INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
@@ -29,6 +30,7 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Kitchen/Recipe/IRecipe.hpp \
 			src/Kitchen/Recipe/Recipe.hpp \
 			src/Utils/IPC/MessageQueue.hpp \
+			src/Kitchen/Kitchen.hpp \
 
 CXX     =   g++
 

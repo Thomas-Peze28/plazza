@@ -17,7 +17,10 @@
 #include "MargaritaRecipe.hpp"
 #include "AmericanaRecipe.hpp"
 #include "FantasiaRecipe.hpp"
+#include "Logger.hpp"
 #include "MessageQueue.hpp"
+#include "ThreadPool.hpp"
+#include "Core.hpp"
 
 namespace Plazza
 {
@@ -30,14 +33,15 @@ namespace Plazza
         void run();
 
     private:
-        std::vector<std::thread> _cooks;
         std::map <Ingredients, int> _stock;
-        sem_t _accessStock;
-
+        std::mutex _accessStock;
         int _id;
         std::string _mqName;
         int _cooks;
         float _multiplier;
         int _refillTime;
+        ThreadPool _cookPool;
+
+        void cookPizza(Order pizza);
     };
 };
