@@ -65,11 +65,11 @@ void Plazza::Kitchen::cookPizza(Order pizza)
 
     {
         std::lock_guard<std::mutex> lock(_accessStock);
-        if (_stock[DOUGH] <= 0 || _stock[TOMATO] <= 0 || _stock[GRUYERE] <= 0 ||
+        while (_stock[DOUGH] <= 0 || _stock[TOMATO] <= 0 || _stock[GRUYERE] <= 0 ||
             (pizza.type == Regina && (_stock[HAM] <= 0 || _stock[MUSHROOMS] <= 0)) ||
             (pizza.type == Americana && _stock[STEAK] <= 0) ||
             (pizza.type == Fantasia && (_stock[EGGPLANT] <= 0 || _stock[GOAT_CHEESE] <= 0 || _stock[CHIEF_LOVE] <= 0))) {
-            refillStock();
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
         _stock[DOUGH] -= 1;
         _stock[TOMATO] -= 1;
@@ -84,11 +84,6 @@ void Plazza::Kitchen::cookPizza(Order pizza)
             _stock[GOAT_CHEESE] -= 1;
             _stock[CHIEF_LOVE] -= 1;
         }
-        std::cout << "Stock : ";
-        for (const auto& item : _stock) {
-            std::cout << item.first << "=" << item.second << " ";
-        }
-        std::cout << std::endl;
     }
     if (pizza.type == Margarita) {
         std::this_thread::sleep_for(std::chrono::seconds(static_cast<int64_t>(1 * _multiplier)));

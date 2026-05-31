@@ -127,6 +127,15 @@ void Plazza::Core::handleOrder(const Order &order, Logger &logger)
     }
 }
 
+void Plazza::Core::check_status()
+{
+    std::lock_guard<std::mutex> lock(_kitchensMutex);
+    std::cout << "Current kitchens status:" << std::endl;
+    for (const auto& kitchen : _kitchens) {
+        std::cout << "Kitchen " << kitchen.id << ": " << kitchen.currentLoad << "/" << 2 * _cooks << " pizzas in progress" << std::endl;
+    }
+}
+
 /**
  * Runs the plazza.
  * @return The result of the plazza execution.
@@ -151,7 +160,7 @@ int Plazza::Core::run()
             continue;
         }
         if (input == "status") {
-            logger.log("Status command.");
+            check_status();
             continue;
         }
         if (input.empty())

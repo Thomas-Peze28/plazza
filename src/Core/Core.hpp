@@ -58,6 +58,7 @@ namespace Plazza
 
         static void signalHandler(int signal);
         static bool _signal;
+        void check_status();
 
         float _multiplier;
         int _cooks;
