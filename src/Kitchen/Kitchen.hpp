@@ -48,5 +48,6 @@ namespace Plazza
         bool hasIngredients(const std::vector<Ingredients> &recipeIngredients);
         void consumeIngredients(const std::vector<Ingredients> &recipeIngredients);
         void refillStock();
+        void printStatus();
     };
 };

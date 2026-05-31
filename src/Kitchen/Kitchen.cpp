@@ -38,8 +38,13 @@ void Plazza::Kitchen::run()
         Order receivedPizza;
     
         if (mq.receiveMessageWithTimeout(receivedPizza, 5) && receivedPizza.amount > 0) {
+
+            if (receivedPizza.amount == -1) {
+                printStatus();
+                continue;
+            }
+
             logger.log("Kitchen " + std::to_string(_id) + " received an order for a pizza of type " + std::to_string(receivedPizza.type));
-            
             _cookPool.enqueueTask([this, receivedPizza]() {
                 this->cookPizza(receivedPizza);
             });
@@ -153,4 +158,19 @@ void Plazza::Kitchen::refillStock()
             item.second += 1;
         }
     }
+}
+
+/**
+* Print the current stock status of the kitchen.
+**/
+void Plazza::Kitchen::printStatus()
+{
+    Logger logger;
+    std::lock_guard<std::mutex> lock(_accessStock);
+
+    std::string status = "Kitchen " + std::to_string(_id) + " stock: ";
+    for (const auto& item : _stock) {
+        status += std::to_string(item.first) + ": " + std::to_string(item.second) + " ";
+    }
+    logger.log(status);
 }

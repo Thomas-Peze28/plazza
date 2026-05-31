@@ -130,10 +130,25 @@ void Plazza::Core::handleOrder(const Order &order, Logger &logger)
 void Plazza::Core::check_status()
 {
     std::lock_guard<std::mutex> lock(_kitchensMutex);
-    std::cout << "Current kitchens status:" << std::endl;
-    for (const auto& kitchen : _kitchens) {
-        std::cout << "Kitchen " << kitchen.id << ": " << kitchen.currentLoad << "/" << 2 * _cooks << " pizzas in progress" << std::endl;
+    
+    if (_kitchens.empty()) {
+        std::cout << "No active kitchens currently." << std::endl;
+        return;
     }
+
+    std::cout << "Current kitchens status:" << std::endl;
+    
+    Order statusRequest;
+    statusRequest.type = static_cast<PizzaType>(0);
+    statusRequest.size = static_cast<PizzaSize>(0);
+    statusRequest.amount = -1;
+
+    for (const auto& kitchen : _kitchens) {
+        std::string mqName = "/plazza_kitchen_" + std::to_string(kitchen.id);
+        MessageQueue<Order> mq(mqName);
+        mq.sendMessage(statusRequest);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 /**
