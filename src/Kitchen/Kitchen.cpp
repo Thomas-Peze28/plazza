@@ -46,6 +46,9 @@ void Plazza::Kitchen::run()
             
         } else {
             logger.log("Kitchen " + std::to_string(_id) + " is inactive. Closing...");
+            _isOpen = false;
+            if (_refillThread.joinable())
+                _refillThread.join();
             MessageQueue<CoreMessage> coreMq("/plazza_core_queue");
             CoreMessage msgCore;
             msgCore.kitchenId = _id;
