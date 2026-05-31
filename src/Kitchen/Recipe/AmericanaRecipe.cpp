@@ -13,11 +13,11 @@
 **/
 Plazza::AmericanaRecipe::AmericanaRecipe()
 {
-    _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::GRUYERE, Ingredients::STEAK};
+    _ingredients = {Plazza::Ingredients::DOUGH, Plazza::Ingredients::TOMATO, Plazza::Ingredients::GRUYERE, Plazza::Ingredients::STEAK};
     _cookingTime = 2;
 }
 
-std::vector<Ingredients> Plazza::AmericanaRecipe::getIngredients() const
+std::vector<Plazza::Ingredients> Plazza::AmericanaRecipe::getIngredients() const
 {
     return _ingredients;
 }

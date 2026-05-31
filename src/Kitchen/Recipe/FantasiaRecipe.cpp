@@ -13,11 +13,11 @@
 **/
 Plazza::FantasiaRecipe::FantasiaRecipe()
 {
-    _ingredients = {Ingredients::DOUGH, Ingredients::TOMATO, Ingredients::EGGPLANT, Ingredients::GOAT_CHEESE, Ingredients::CHIEF_LOVE};
+    _ingredients = {Plazza::Ingredients::DOUGH, Plazza::Ingredients::TOMATO, Plazza::Ingredients::EGGPLANT, Plazza::Ingredients::GOAT_CHEESE, Plazza::Ingredients::CHIEF_LOVE};
     _cookingTime = 4;
 }
 
-std::vector<Ingredients> Plazza::FantasiaRecipe::getIngredients() const
+std::vector<Plazza::Ingredients> Plazza::FantasiaRecipe::getIngredients() const
 {
     return _ingredients;
 }

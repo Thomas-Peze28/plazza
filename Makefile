@@ -19,6 +19,10 @@ SRC     =   src/main.cpp \
 			src/ThreadPool/ThreadPool.cpp \
 			src/Utils/Logger/Logger.cpp \
 			src/Kitchen/Kitchen.cpp \
+			src/Kitchen/Recipe/AmericanaRecipe.cpp \
+			src/Kitchen/Recipe/FantasiaRecipe.cpp \
+			src/Kitchen/Recipe/MargaritaRecipe.cpp \
+			src/Kitchen/Recipe/ReginaRecipe.cpp \
 
 INCLUDE =  	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
@@ -31,6 +35,11 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Kitchen/Recipe/Recipe.hpp \
 			src/Utils/IPC/MessageQueue.hpp \
 			src/Kitchen/Kitchen.hpp \
+			src/Kitchen/Recipe/IRecipe.hpp \
+			src/Kitchen/Recipe/AmericanaRecipe.hpp \
+			src/Kitchen/Recipe/FantasiaRecipe.hpp \
+			src/Kitchen/Recipe/MargaritaRecipe.hpp \
+			src/Kitchen/Recipe/ReginaRecipe.hpp \
 
 CXX     =   g++
 
