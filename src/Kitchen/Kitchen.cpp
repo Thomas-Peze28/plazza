@@ -7,7 +7,7 @@
 
 #include "Kitchen.hpp"
 
-Plazza::Kitchen::Kitchen(const Core &core) : _core(core)
+Plazza::Kitchen::Kitchen(const Core &core) : _core(core), _cookPool(core._cooks)
 {
     _clock = 0;
     sem_init(&_accessStock, 0, 1);
@@ -20,7 +20,6 @@ Plazza::Kitchen::Kitchen(const Core &core) : _core(core)
     _stock[EGGPLANT] = 5;
     _stock[GOAT_CHEESE] = 5;
     _stock[CHIEF_LOVE] = 5;
-    _cooks = std::vector<std::thread>(_core._cooks);
 }
 
 Plazza::Kitchen::~Kitchen()
@@ -39,3 +38,13 @@ void Plazza::Kitchen::refillStock()
         _clock = 0;
     }
 }
+
+void Plazza::Kitchen::enqueueCookTask(std::function<void()> task)
+{
+    _cookPool.enqueueTask(std::move(task));
+}
+
+// void Plazza::Kitchen::startCooks()
+// {
+//     // ThreadPool starts its worker threads on construction.
+// }

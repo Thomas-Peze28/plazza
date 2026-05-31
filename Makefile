@@ -20,8 +20,10 @@ SRC     =   src/main.cpp \
 			src/Parser/Parser.cpp \
 			src/ThreadPool/ThreadPool.cpp \
 			src/Utils/Logger/Logger.cpp \
+			src/Kitchen/Kitchen.cpp \
+			src/Kitchen/Cooks/Cooks_routine.cpp \
 
-INCLUDE =  	src/Core/Core.hpp \
+INCLUDE =   	src/Core/Core.hpp \
 			src/Include/RTCError.hpp \
 			src/Utils/SafeQueue/ISafeQueue.hpp \
 			src/Utils/SafeQueue/SafeQueue.hpp \
@@ -30,6 +32,8 @@ INCLUDE =  	src/Core/Core.hpp \
 			src/Parser/Parser.hpp \
 			src/ThreadPool/ThreadPool.hpp \
 			src/Utils/Logger/Logger.hpp \
+			src/Kitchen/Kitchen.hpp \
+			src/Kitchen/Cooks/Cooks_routine.hpp \
 			src/Kitchen/Recipe/IRecipe.hpp \
 			src/Kitchen/Recipe/Recipe.hpp \
 

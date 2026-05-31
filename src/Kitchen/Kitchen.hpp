@@ -7,9 +7,8 @@
 
 #ifndef KITCHEN_HPP_
 #define KITCHEN_HPP_
-    #include <vector>
+    #include <functional>
     #include <map>
-    #include <thread>
     #include <semaphore.h>
     #include "IRecipe.hpp"
     #include "ReginaRecipe.hpp"
@@ -17,6 +16,7 @@
     #include "AmericanaRecipe.hpp"
     #include "FantasiaRecipe.hpp"
     #include "Core.hpp"
+    #include "ThreadPool.hpp"
 
 namespace Plazza
 {
@@ -26,10 +26,12 @@ namespace Plazza
             Kitchen(const Core &core);
             ~Kitchen();
             void refillStock();
+            void enqueueCookTask(std::function<void()> task);
+            // void startCooks();
 
         private:
             const Core &_core;
-            std::vector<std::thread> _cooks;
+            ThreadPool _cookPool;
             std::map <Ingredients, int> _stock;
             sem_t _accessStock;
             int _clock;

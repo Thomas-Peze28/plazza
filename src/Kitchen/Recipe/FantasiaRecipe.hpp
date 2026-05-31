@@ -16,7 +16,7 @@ namespace Plazza {
             FantasiaRecipe();
             ~FantasiaRecipe() override = default;
         private:
-            std::vector<Ingridients> _ingridients;
+            std::vector<Ingredients> _ingredients;
             int _cookingTime;
     };
 };
